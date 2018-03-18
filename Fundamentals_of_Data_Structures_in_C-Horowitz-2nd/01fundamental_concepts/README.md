@@ -1,6 +1,6 @@
 # Chapter 01 Basic Concepts
 
-## Section 1.1 개요: 시스템 생병 주기
+## Section 1.1 개요: 시스템 생명 주기
 
 ## Section 1.2 포인터와 동적 메모리 할당
  * Program 1.1: 메모리의 할당과 반환 [malloc.c](./malloc.c)
