@@ -8,12 +8,14 @@
 
 ## Section 2.2 동적으로 할당된 배열
 ### 2.2.1 1차원 배열 수정 [array01_rev.c](./array01_rev.c)
- * Program 2.3: 2차원 배열을 동적으로 생성
+ * Program 2.3: 2차원 배열을 동적으로 생성 [struct.c](./struct.c)
 
 ## Section 2.3 구조와 유니언
- * Program 2.4: 구조의 동등성을 검사하는 함수
+### 2.3.1 및 2.3.2에 대한 몇 가지 테스트를 진행 [struct.c](./struct.c)
+ * Program 2.4: 구조의 동등성을 검사하는 함수 [struct.c](./struct.c)
 
 ## Section 2.4 다항식
+### 2.4를 제대로 읽지 않고 다항식을 구현 [polynomial_ver1_main.c](./polynomial_ver1_main.c)
  * Program 2.5: 함수 padd의 초기 버전
  * Program 2.6: 두 다항식을 더하는 함수
  * Program 2.7: 새로운 항을 첨가하는 함수
