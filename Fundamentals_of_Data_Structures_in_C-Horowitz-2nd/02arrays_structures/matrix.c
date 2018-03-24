@@ -65,6 +65,24 @@ void madd(matrix a, matrix b, matrix *d) {
 
 void mmultiply(matrix a, matrix b, matrix *d) {
 	assert(d != NULL);
+	assert( (a.rows > 0) && (a.cols > 0) && (b.rows > 0) && (b.cols > 0) );
+	assert( (a.cols == b.rows) );
+
+	if ( (a.rows != d->rows) || (b.cols != d->cols) ) {
+		mremove(d);
+		mcreate(d, a.rows, b.cols);
+	}
+
+	for(int i=0;i<a.rows;i++)
+		for(int j=0;j<b.cols;j++) {
+			d->e[i][j] = 0;
+			for(int k=0;k<a.cols;k++)
+				d->e[i][j] += a.e[i][k] * b.e[k][j];
+		}
+}
+
+void melementmultiply(matrix a, matrix b, matrix *d){ // element-wise multiplication
+	assert(d != NULL);
 	assert( (a.rows > 0) && (a.cols > 0) );
 	assert( (a.rows == b.rows) && (a.cols == b.cols) );
 

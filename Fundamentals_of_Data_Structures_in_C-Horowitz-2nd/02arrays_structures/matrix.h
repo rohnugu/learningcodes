@@ -17,4 +17,5 @@ void mremove(matrix *a);
 void mtranspose(matrix a, matrix *b);
 void madd(matrix a, matrix b, matrix *d);
 void mmultiply(matrix a, matrix b, matrix *d);
+void melementmultiply(matrix a, matrix b, matrix *d); // element-wise multiplication
 void mprint(matrix a, bool pointer);
