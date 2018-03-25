@@ -20,7 +20,7 @@ typedef struct _elements {
 
 typedef element* matrix;
 
-void smcreate(matrix *a, const unsigned int rows, const unsigned int cols);
+unsigned int smcreate(matrix *a, const unsigned int rows, const unsigned int cols);
 void smremove(matrix *a);
 void smtranspose(matrix a, matrix b);
 void smfastTranspose(matrix a, matrix b);

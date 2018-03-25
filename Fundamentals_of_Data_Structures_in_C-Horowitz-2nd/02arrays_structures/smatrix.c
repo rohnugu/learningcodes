@@ -2,13 +2,15 @@
 
 void storeSum(matrix d, int *totalD, int row, int column, int *sum);
 
-void smcreate(matrix *a, const unsigned int rows, const unsigned int cols) {
+unsigned int smcreate(matrix *a, const unsigned int rows, const unsigned int cols) {
 	assert(a != NULL);
 
-	*a = malloc( MIN( rows*cols, MAX_ELEMENTS ) * sizeof(element));
+	unsigned int capacity = MIN( rows*cols, MAX_ELEMENTS );
+	*a = malloc( capacity * sizeof(element));
 	(*a)[0].row = rows;
 	(*a)[0].col = cols;
 	(*a)[0].value = 0; // zero matrix
+	return capacity;
 }
 
 void smremove(matrix *a) {
@@ -106,18 +108,20 @@ void smmultiply(matrix a, matrix b, matrix d) {
 	int                   colsB = b[0].col, totalB = b[0].value;
 
 	matrix newA;
-	smcreate(&newA, totalA + 2, 1); /* warning: newA has incorrect info */
+	int capacity = smcreate(&newA, totalA + 2, 1); /* warning: newA has incorrect info */
+	assert(capacity >= totalA + 2);
 	memcpy( newA, a, (totalA + 1) * sizeof(element) );
 
 	matrix newB;
-	smcreate(&newB, totalB + 2, 1);
+	capacity = smcreate(&newB, totalB + 2, 1);
+	assert(capacity >= totalB + 2);
 	smfastTranspose(b, newB);
-	/* set boundary condition */
 
+	/* set boundary condition */
 	newA[totalA+1].row = rowsA;
 	newB[totalB+1].row = colsB;
 	newB[totalB+1].col = 0;
-	for (int i=1; i <= totalA; ) {
+	for (int i = rowBegin; i <= totalA; ) {
 		int column = newB[1].row;
 		for(int j=1; j <= totalB+1; ) {
 			/* multiply row of a by column of b */
@@ -131,25 +135,27 @@ void smmultiply(matrix a, matrix b, matrix d) {
 				i = rowBegin;
 				column = newB[j].row;
 			} else switch (COMPARE(newA[i].col, newB[j].col)) {
-				case -1: i++; break; /* go to next term in a */
-				case  0: /* add terms, go to next term in a and b */
+				case -1: i++; break; /* '<' go to next element in a */
+				case  0: /* '==' add elements, go to next element in a and b */
 					sum += newA[i++].value * newB[j++].value;
 					break;
-				case  1: j++; /* advanced to next term in b */
+				case  1: j++; /* '>' advanced to next element in b */
 			}
 		} /* end of for j <= totalB+1 */
 		for (; a[i].row == row; i++);
 		rowBegin = i; row = a[i].row;
-	} /* end of for i<= totalA */
-	d[0].row = rowsA;
-	d[0].col = colsB; d[0].value = totalD;
+	} /* end of for i <= totalA */
+	d[0].row   = rowsA;
+	d[0].col   = colsB;
+	d[0].value = totalD;
 }
 
 void storeSum(matrix d, int *totalD, int row, int column, int *sum) {
 	/* if *sum != 0, then it along with its row and column
 	   position is stored as the *totalD+1 entry in d */
 	if (*sum) {
-		assert (*totalD < MAX_ELEMENTS);
+		assert (*totalD < MAX_ELEMENTS - 1);
+		/* printf("%d \n", *totalD); */
 		d[++*totalD].row = row;
 		d[*totalD].col = column;
 		d[*totalD].value = *sum;
