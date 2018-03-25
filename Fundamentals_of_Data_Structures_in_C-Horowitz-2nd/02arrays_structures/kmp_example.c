@@ -11,8 +11,10 @@
 
 char *(strstr_Plauger)(const char *s1, const char *s2);
 
-int pmatch();
-void fail();
+int  nfind(char *string, char *pat);
+
+int pmatch(char *string, char *pat);
+void fail(char *pat);
 
 int  failure[MAX_PATTERN_SIZE];
 char string[MAX_STRING_SIZE];
@@ -59,7 +61,17 @@ int main(int argc, char* argv[]) {
 
 	start = clock();
 	fail(pat);
-	int pResult = pmatch(string, pat);
+	int pResult = nfind(string, pat);
+	end = clock();
+	duration = ((double) (end - start)) / CLOCKS_PER_SEC;
+
+	printf("Program 2.13 in the Textbook:\t %p, %d\n", &string[pResult], pResult);
+	printf("Duration: %f\n", duration);	
+	pResult = 0;
+
+	start = clock();
+	fail(pat);
+	pResult = pmatch(string, pat);
 	end = clock();
 	duration = ((double) (end - start)) / CLOCKS_PER_SEC;
 
@@ -73,7 +85,7 @@ int main(int argc, char* argv[]) {
    Figure 14.19: strstr.c, page 405.
 */
 char *(strstr_Plauger)(const char *s1, const char *s2) {
-	/* find first occurence of s2[] in s1[] */
+	/* find first occurrence of s2[] in s1[] */
 	if(*s2 == '\0')
 		return ((char *)s1);
 	for(; (s1 = strchr(s1, *s2)) != NULL; ++s1) {
@@ -87,6 +99,24 @@ char *(strstr_Plauger)(const char *s1, const char *s2) {
 				break;
 	}
 	return (NULL);
+}
+
+int  nfind(char *string, char *pat) {
+	/* match the last character of pattern first, and
+	   then match from the beginning */
+	int start = 0;
+	int lastS = strlen(string) - 1;
+	int lastP = strlen(pat) - 1;
+	int endmatch = lastP;
+
+	for(int i = 0; endmatch <= lastS; endmatch++, start++) {
+		int j = 0;
+		if (string[endmatch] == pat[lastP])
+			for(i = start; (j < lastP) && (string[i] == pat[j]); i++, j++);
+		if (j == lastP)
+			return start; /* successful */
+	}
+	return -1;
 }
 
 int pmatch(char *string, char *pat) {
