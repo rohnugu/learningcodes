@@ -2,9 +2,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 
 #define MIN(a,b) (((a)<(b))?(a):(b))
 #define MAX(a,b) (((a)>(b))?(a):(b))
+#define COMPARE(x,y) ( ((x) < (y)) ? -1: (((x) == (y))? 0: 1) )
 
 #define MAX_ELEMENTS 	101 /* maximum number of terms + 1 */
 #define MAX_COLS		100
