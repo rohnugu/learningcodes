@@ -38,6 +38,15 @@ void main()
 	smprint(b, true);
 	printf("\n");
 
+	matrix d;
+	smcreate(&d, 5, 5);
+
+	smmultiply(a, b, d);
+
+	smvisualprint(d, false);
+	smprint(d, true);
+	printf("\n");
+
 	free(a);
 	smremove(&b);
 }
