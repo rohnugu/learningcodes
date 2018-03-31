@@ -14,7 +14,7 @@ void main() {
 
 	printf("Top: %d\n", top(stack1) );
 	printf("Size: %d\n", sz(stack1) );
-	for (int i=0;i< sz(stack1); i++) {
+	for (int i=0;i< top(stack1); i++) {
 		printf("Key: %d, Value: %c\n", stack1[i].key, stack1[i].value);
 	}
 
