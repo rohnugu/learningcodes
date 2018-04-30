@@ -60,12 +60,15 @@ int main(int argc, char* argv[]) {
 	printf("Duration: %f\n", duration);
 
 	start = clock();
-	fail(pat);
 	int pResult = nfind(string, pat);
 	end = clock();
 	duration = ((double) (end - start)) / CLOCKS_PER_SEC;
 
-	printf("Program 2.13 in the Textbook:\t %p, %d\n", &string[pResult], pResult);
+	if(pResult >=0) {
+		printf("Program 2.13 in the Textbook:\t %p, %d\n", &string[pResult], pResult);
+	} else {
+		exit(1);
+	}
 	printf("Duration: %f\n", duration);	
 	pResult = 0;
 
@@ -75,7 +78,11 @@ int main(int argc, char* argv[]) {
 	end = clock();
 	duration = ((double) (end - start)) / CLOCKS_PER_SEC;
 
-	printf("KMP Algorithm in the Textbook:\t %p, %d\n", &string[pResult], pResult);
+	if(pResult >=0) {
+		printf("KMP Algorithm in the Textbook:\t %p, %d\n", &string[pResult], pResult);
+	} else {
+		exit(1);
+	}
 	printf("Duration: %f\n", duration);
 
 }
